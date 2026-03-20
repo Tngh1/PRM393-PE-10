@@ -10,6 +10,7 @@ import 'ui/list_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await DatabaseHelper.instance.database;
+  await DatabaseHelper.instance.seedData();
   final prefs = await SharedPreferences.getInstance();
   runApp(ProviderScope(
     overrides: [sharedPreferencesProvider.overrideWithValue(prefs)],

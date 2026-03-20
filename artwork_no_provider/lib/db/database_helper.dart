@@ -269,4 +269,49 @@ class DatabaseHelper {
       whereArgs: [id],
     );
   }
+
+  Future<void> seedData() async {
+    final db = await database;
+
+    // Nếu đã có user thì không seed nữa
+    final users = await db.query(userTable);
+    if (users.isNotEmpty) return;
+
+    // Tạo user admin
+    await db.insert(userTable, {
+      'username': 'admin',
+      'email': 'admin@gmail.com',
+      'password': '123123',
+      'createdAt': DateTime.now().toIso8601String(),
+    });
+
+    // Seed artworks mẫu
+    await db.insert(artworkTable, {
+      'title': 'Mona Lisa',
+      'artist': 'Leonardo da Vinci',
+      'year': 1503,
+      'category': 'Portrait',
+      'description': 'A world-famous portrait painting.',
+      'createdBy': 1,
+    });
+
+    await db.insert(artworkTable, {
+      'title': 'Starry Night',
+      'artist': 'Vincent van Gogh',
+      'year': 1889,
+      'category': 'Post-Impressionism',
+      'description': 'A famous night landscape painting.',
+      'createdBy': 1,
+    });
+
+    await db.insert(artworkTable, {
+      'title': 'The Scream',
+      'artist': 'Edvard Munch',
+      'year': 1893,
+      'category': 'Expressionism',
+      'description': 'An iconic artwork symbolizing anxiety.',
+      'createdBy': 1,
+    });
+  }
+
 }
